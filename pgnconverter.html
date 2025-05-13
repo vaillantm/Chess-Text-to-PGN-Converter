@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PGN File Generator</title>
+<style>
+/* Set overall page background and text color */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #000000; /* black background */
+    color: #f1c40f; /* yellow text */
+}
+
+/* Center the content */
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    background-color: #111; /* dark shade for contrast */
+    padding: 30px;
+    border-radius: 10px;
+    /* box-shadow removed */
+}
+
+/* Main heading */
+h1 {
+    text-align: center;
+    color: #f1c40f;
+    margin-bottom: 20px;
+}
+
+/* Style each form group */
+.form-group {
+    margin-bottom: 20px;
+}
+
+/* Style for labels */
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+/* Input and textarea fields */
+textarea,
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #f1c40f;
+    background-color: #000;
+    color: #f1c40f;
+    border-radius: 5px;
+    resize: vertical;
+    font-size: 14px;
+}
+
+/* Button styles */
+.btn {
+    display: block;
+    width: 100%;
+    background-color: #f1c40f;
+    color: #000;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #d4ac0d;
+}
+
+/* Download link styling */
+.download-link {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.download-link a {
+    display: inline-block;
+    background-color: #f1c40f;
+    color: #000;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.download-link a:hover {
+    background-color: #d4ac0d;
+}
+
+</style>
+
+</head>
+<body>
+
+    <div class="container">
+        <h1>Chess Text to PGN Converter</h1>
+        <form id="pgnForm">
+            <div class="form-group">
+                <label for="pgnInput">Enter PGN:</label>
+                <textarea id="pgnInput" rows="10" placeholder=" Example: f3 e5 2. g4 Qh4#"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="fileName">Enter FILE  NAME:</label>
+                <input type="text" id="fileName" placeholder="Enter FILENAME TO SAVE AS...">
+            </div>
+
+            <button type="button" onclick="generatePGN()" class="btn">Generate PGN File</button>
+        </form>
+
+        <div id="downloadLink" class="download-link"></div>
+    </div>
+
+    <script>
+        function generatePGN() {
+            const pgn = document.getElementById('pgnInput').value;
+            const fileName = document.getElementById('fileName').value.trim() || 'chess_game';
+
+            if (!pgn || !fileName) {
+                alert('Please provide both PGN and file name.');
+                return;
+            }
+
+            const blob = new Blob([pgn], { type: 'text/plain' });
+
+            const downloadLink = document.createElement('a');
+            downloadLink.href = URL.createObjectURL(blob);
+            downloadLink.download = `${fileName}.pgn`;
+
+            const downloadDiv = document.getElementById('downloadLink');
+            downloadDiv.innerHTML = ''; 
+            downloadDiv.appendChild(downloadLink);
+            downloadLink.click();
+        }
+    </script>
+
+</body>
+</html>
